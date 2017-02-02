@@ -10,34 +10,42 @@
  */
 
 
-double f(double p, double q, double r, double s){
- return (3*p*q*q*s + 2*p*q + 3*s*q + 4*s*p*r)/(2*p*r+3*q*r+4*q*s+1);
+double func(double *x){
+ return 0; //Array it
  }
 void main(){ 
-		int xM =2, xN = 5;
-		int yM =3, yN = 10;
-		int zM =2, zN = 5;
-		int pM =2, pN = 18;
+		printf("Enter the number of Variables");
+		int n = scanf("%d",&n);
+		int bound[n][2];
+		for(int i=0;i<n;i++){
+			printf("Enter the %d th variable lower and upper limit");
+			scanf("%f %f",&bound[i][0],&bound[i][1]);} 
 		srand(time(0));//Randomizing srand time -> 0
 		
-		int phe = 0.22154; //Phermone Evaporation rate
+		System.out.printf("Enter Phermone evaporation rate range - 0.1-0.5")
+		int phe;
+		scanf("%f",phe); //Phermone Evaporation rate
 		
 		struct minimum{
 				double value;
-				double p,q,r,s;
+				double *x;
 				} minv;
 		int gstr=0;
 		
-		
-		for(int gi=0;gi<5000;gi++){
+		int maxiter;//Maximum number of iteration
+		printf("Enter the number of iteration")
+		scanf("%d",&maxiter);
+		int nor;//Number of routes
+		printf("Enter the number of routes");
+		scanf("%d",&nor);
+		for(int gi=0;gi<maxiter;gi++){
 			int str=0;
-		
-		//double s[5];s[0]=0;s[1]=0;s[2]=0;s[3]=0;s[4]=0;
+				
 			struct route{
 				double value;//Value of the minimized function or the length of the route
 				double ph;// Phermone Count
-				double p,q,r,s;
-			}r[10000];// Initialize an array of routes
+				double *rx;//Array
+			}r[nor];// Initialize an array of routes
 		
 			int cnt =0;
 			
@@ -45,25 +53,23 @@ void main(){
 			double value;
 			int ps;} min;
 			
-			for(int counter = 0;counter <10000; counter++){
+			for(int counter = 0;counter <nor; counter++){
 			//Generate Random Variable, i.e Indivisual Ant
-				double i = round((xM + (double)rand() / (double)((double)RAND_MAX / (xN - xM + 1) + 1))*10)/10;//For p
-				double j = round((yM + (double)rand() / (double)((double)RAND_MAX / (yN - yM + 1) + 1))*10)/10;//For q
-				double k = round((zM + (double)rand() / (double)((double)RAND_MAX / (zN - zM + 1) + 1))*10)/10;//For r
-				double l = round((pM + (double)rand() / (double)((double)RAND_MAX / (pN - pM + 1) + 1))*10)/10;//For s
+				int *tx; //test variables
+				//Upper and lower bound Constraint Handling
+				for(int i=0;i<n;i++){
+				double tx[i] = round((bound[i] + (double)rand() / (double)((double)RAND_MAX / (bound[i][1] - bound[i][0] + 1) + 1))*10)/10;//For each variable
+			}
 				//printf("\n %f %f %f \n", i, j, k);
-					if((abs(i*j*l +j*j*l +i*k) ==69)&& (abs(i*j+i*k+j*l==37))){ // Checking the condition
-						double m1 = f(i,j,k,l); // Calculate the route length
+					if(constrant(*tx)){ // Checking the condition
+						double m1 = func(*tx); // Calculate the route length
 						double m = round(m1*10)/10;
 						if(str==0){					
 							min.value=m;
 							if(gstr==0){minv.value=m;gstr++;}
 							min.ps= cnt;
 							r[cnt].value=m;
-							r[cnt].p=i;
-							r[cnt].q=j;
-							r[cnt].r=k;
-							r[cnt].s=l;
+							r[cnt].rx=tx;
 							r[cnt].ph=1;
 							//printf("%f \t %f \n", r[min.ps].value, r[min.ps].ph);	
 							//printf("%f \t %d \n", min.value, min.ps);	
@@ -79,10 +85,7 @@ void main(){
 								if(l1==0){
 									r[cnt].value=m;
 									r[cnt].ph=1.0;
-									r[cnt].p=i;
-									r[cnt].q=j;
-									r[cnt].r=k;
-									r[cnt].s=l;
+									r[cnt].rx=tx;
 					
 										/*printf("%f \t %d \t %d\n", r[cnt].value, r[cnt].ph, cnt); 
 										*printf("%f \t %d \n", r[min.ps].value, r[min.ps].ph);*/ //Debugging Line
@@ -112,14 +115,10 @@ void main(){
 					}
 			if(minv.value>min.value){
 					minv.value=min.value;
-					minv.p=r[min.ps].p;
-					minv.q=r[min.ps].q;
-					minv.r=r[min.ps].r;
-					minv.s=r[min.ps].s;
-					
+					minv.x=r[min.ps].rx;					
 				}
-			printf("%f %f %f %f %f %f\n", min.value,r[min.ps].p,r[min.ps].q,r[min.ps].r,r[min.ps].s,  r[min.ps].ph);
-		}printf("\n %f %f %f %f %f \n", minv.value, minv.p, minv.q, minv.r, minv.s);
+			//printf("%f %f %f %f %f %f\n", min.value,r[min.ps].p,r[min.ps].q,r[min.ps].r,r[min.ps].s,  r[min.ps].ph);
+		}//printf("\n %f %f %f %f %f \n", minv.value, minv.p, minv.q, minv.r, minv.s);
 		//printf("%f \n", ((double)minv/100));
 		}
 							
