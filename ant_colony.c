@@ -3,6 +3,7 @@
 #include <time.h>
 #include <math.h>
 #define problem
+
 /*
  * Author - Yajnavalkya Bandyopadhyay
  * email- 	yajnab@gmail.com
@@ -14,11 +15,27 @@ struct funcinfo{
 				double value; //Value of Objective function
 				double *x; //Equation variables
 				int validation; //1 if constraints are satisfied else a 0; A boolean but to support all C it is made integer type.
-}
+};
 #ifdef problem
 struct funcinfo func(double *x){
- return 0; //Array it
- }
+ double val; double *ctr;
+  
+  /*The Function Goes Here*/
+  val= 2*x[0] + 4*x[1]*x[0] - 2*x[0]*x[0]; //Function goes here
+ 
+ 
+ /* Normalized constraints g(x)=>0*/
+ ctr[0] = x[0]*x[1] - 1;
+ ctr[1] = 2*x[3] + x[1];
+ 
+ int ctr_count = sizeof(ctr)/sizeof(ctr[0]);
+ int validation=1;
+ for(int i=0;i<ctr_count;i++){
+	 if(ctr[i]<0)validation =0;}
+		
+ struct funcinfo ret = {ctr,val,x,validation};
+ return  ret;//Array it
+}
 #endif
 void main(){ 
 		printf("Enter the number of Variables");
@@ -28,16 +45,16 @@ void main(){
 			printf("Enter the %d th variable lower and upper limit");
 			scanf("%f %f",&bound[i][0],&bound[i][1]);} 
 		srand(time(0));//Randomizing srand time -> 0
-		
-		System.out.printf("Enter Phermone evaporation rate range - 0.1-0.5")
+
+		printf("Enter Phermone evaporation rate range - 0.1-0.5");
 		int phe;
-		scanf("%f",phe); //Phermone Evaporation rate
-		
+		scanf("%f",&phe); //Phermone Evaporation rate
+
 		struct funcinfo minv;
 		int gstr=0;
 		
 		int maxiter;//Maximum number of iteration
-		printf("Enter the number of iteration")
+		printf("Enter the number of iteration");
 		scanf("%d",&maxiter);
 		int nor;//Number of routes
 		printf("Enter the number of routes");
@@ -61,7 +78,7 @@ void main(){
 				int *tx; //test variables
 				//Upper and lower bound Constraint Handling
 				for(int i=0;i<n;i++)
-					double tx[i] = round((bound[i] + (double)rand() / (double)((double)RAND_MAX / (bound[i][1] - bound[i][0] + 1) + 1))*10)/10;//For each variable
+					tx[i] = round((bound[i][0] + (double)rand() / (double)((double)RAND_MAX / (bound[i][1] - bound[i][0] + 1) + 1))*10)/10;//For each variable
 			
 				//printf("\n %f %f %f \n", i, j, k);
 					if(func(*tx).validation){ // Checking the condition
