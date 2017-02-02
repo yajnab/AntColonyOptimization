@@ -75,14 +75,14 @@ void main(){
 			int ps;} min;
 			
 			for(int counter = 0;counter <nor; counter++){//Generate Random Variable, i.e Indivisual Ant
-				int *tx; //test variables
+				double *tx; //test variables
 				//Upper and lower bound Constraint Handling
 				for(int i=0;i<n;i++)
 					tx[i] = round((bound[i][0] + (double)rand() / (double)((double)RAND_MAX / (bound[i][1] - bound[i][0] + 1) + 1))*10)/10;//For each variable
 			
 				//printf("\n %f %f %f \n", i, j, k);
-					if(func(*tx).validation){ // Checking the condition
-						double m1 = func(*tx).value; // Calculate the route length
+					if(func(tx).validation){ // Checking the condition
+						double m1 = func(tx).value; // Calculate the route length
 						double m = round(m1*10)/10;
 						if(str==0){					
 							min.value=m;
