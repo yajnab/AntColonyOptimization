@@ -2,17 +2,24 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
+#define problem
 /*
  * Author - Yajnavalkya Bandyopadhyay
  * email- 	yajnab@gmail.com
  * Civil Engineering Student
  * Techno India College of Technology
  */
-
-
-double func(double *x){
+struct funcinfo{
+				double *cns; //Store the values of constraints
+				double value; //Value of Objective function
+				double *x; //Equation variables
+				int validation; //1 if constraints are satisfied else a 0; A boolean but to support all C it is made integer type.
+}
+#ifdef problem
+struct funcinfo func(double *x){
  return 0; //Array it
  }
+#endif
 void main(){ 
 		printf("Enter the number of Variables");
 		int n = scanf("%d",&n);
@@ -26,10 +33,7 @@ void main(){
 		int phe;
 		scanf("%f",phe); //Phermone Evaporation rate
 		
-		struct minimum{
-				double value;
-				double *x;
-				} minv;
+		struct funcinfo minv;
 		int gstr=0;
 		
 		int maxiter;//Maximum number of iteration
@@ -53,16 +57,15 @@ void main(){
 			double value;
 			int ps;} min;
 			
-			for(int counter = 0;counter <nor; counter++){
-			//Generate Random Variable, i.e Indivisual Ant
+			for(int counter = 0;counter <nor; counter++){//Generate Random Variable, i.e Indivisual Ant
 				int *tx; //test variables
 				//Upper and lower bound Constraint Handling
-				for(int i=0;i<n;i++){
-				double tx[i] = round((bound[i] + (double)rand() / (double)((double)RAND_MAX / (bound[i][1] - bound[i][0] + 1) + 1))*10)/10;//For each variable
-			}
+				for(int i=0;i<n;i++)
+					double tx[i] = round((bound[i] + (double)rand() / (double)((double)RAND_MAX / (bound[i][1] - bound[i][0] + 1) + 1))*10)/10;//For each variable
+			
 				//printf("\n %f %f %f \n", i, j, k);
-					if(constrant(*tx)){ // Checking the condition
-						double m1 = func(*tx); // Calculate the route length
+					if(func(*tx).validation){ // Checking the condition
+						double m1 = func(*tx).value; // Calculate the route length
 						double m = round(m1*10)/10;
 						if(str==0){					
 							min.value=m;
