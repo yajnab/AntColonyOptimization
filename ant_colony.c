@@ -13,40 +13,48 @@
 struct funcinfo{
 				double *cns; //Store the values of constraints
 				double value; //Value of Objective function
-				double *x; //Equation variables
+				double *xv; //Equation variables
 				int validation; //1 if constraints are satisfied else a 0; A boolean but to support all C it is made integer type.
 };
-#ifdef problem
+
 struct funcinfo func(double *x){
  double val; double *ctr;
   
   /*The Function Goes Here*/
-  val= 2*x[0] + 4*x[1]*x[0] - 2*x[0]*x[0]; //Function goes here
+  val= 2*x[0] + 4*x[1]/x[0]; //Function goes here
+  printf("%lf",val);
  
  
  /* Normalized constraints g(x)=>0*/
  ctr[0] = x[0]*x[1] - 1;
- ctr[1] = 2*x[3] + x[1];
+ ctr[1] = 2*x[0] + x[1];
  
  int ctr_count = sizeof(ctr)/sizeof(ctr[0]);
  int validation=1;
  for(int i=0;i<ctr_count;i++){
 	 if(ctr[i]<0)validation =0;}
 		
- struct funcinfo ret = {ctr,val,x,validation};
+ struct funcinfo ret;
+ ret.cns = ctr;
+ ret.value = val;
+ ret.xv = x;
+ ret.validation = validation;
  return  ret;//Array it
 }
-#endif
+
 void main(){ 
-		printf("Enter the number of Variables");
-		int n = scanf("%d",&n);
+		printf("Enter the number of Variables \t");
+		int n;
+		scanf("%d",&n);
+		printf("%d",n);
 		double bound[n][2];
 		for(int i=0;i<n;i++){
-			printf("Enter the %d th variable lower and upper limit",i);
-			scanf("%lf %lf",&bound[i][0],&bound[i][1]);} 
+			printf("Enter the %d th variable lower and upper limit \t",i);
+			scanf("%lf %lf",&bound[i][0],&bound[i][1]);
+			} 
 		srand(time(0));//Randomizing srand time -> 0
 
-		printf("Enter Phermone evaporation rate range - 0.1-0.5");
+		printf("Enter Phermone evaporation rate range - 0.1-0.5 \t");
 		float phe;
 		scanf("%f",&phe); //Phermone Evaporation rate
 
@@ -54,10 +62,10 @@ void main(){
 		int gstr=0;
 		
 		int maxiter;//Maximum number of iteration
-		printf("Enter the number of iteration");
+		printf("Enter the number of iteration \t");
 		scanf("%d",&maxiter);
 		int nor;//Number of routes
-		printf("Enter the number of routes");
+		printf("Enter the number of routes \t");
 		scanf("%d",&nor);
 		for(int gi=0;gi<maxiter;gi++){
 			int str=0;
@@ -77,12 +85,15 @@ void main(){
 			for(int counter = 0;counter <nor; counter++){//Generate Random Variable, i.e Indivisual Ant
 				double *tx; //test variables
 				//Upper and lower bound Constraint Handling
-				for(int i=0;i<n;i++)
+				for(int i=0;i<n;i++){
 					tx[i] = round((bound[i][0] + (double)rand() / (double)((double)RAND_MAX / (bound[i][1] - bound[i][0] + 1) + 1))*10)/10;//For each variable
-			
-				//printf("\n %f %f %f \n", i, j, k);
-					if(func(tx).validation){ // Checking the condition
-						double m1 = func(tx).value; // Calculate the route length
+					printf("\n %f \n",tx[i]);}
+
+					struct funcinfo funcval = func(tx);
+					printf("%lf %d",funcval.value, funcval.validation);
+					if(funcval.validation==1){ // Checking the condition
+						double m1 = funcval.value; // Calculate the route length						
+						printf("%lf", m1);
 						double m = round(m1*10)/10;
 						if(str==0){					
 							min.value=m;
@@ -135,10 +146,19 @@ void main(){
 					}
 			if(minv.value>min.value){
 					minv.value=min.value;
-					minv.x=r[min.ps].rx;					
+					minv.xv=r[min.ps].rx;					
 				}
+			printf("\n %f", min.value);
+			for(int i=0;i<n;i++){
+				printf("\n %f", r[min.ps].rx[i]);
+				}
+			printf("%f",r[min.ps].ph);
 			//printf("%f %f %f %f %f %f\n", min.value,r[min.ps].p,r[min.ps].q,r[min.ps].r,r[min.ps].s,  r[min.ps].ph);
-		}//printf("\n %f %f %f %f %f \n", minv.value, minv.p, minv.q, minv.r, minv.s);
+		}
+
+			printf("\n %f", minv.value);
+
+
 		//printf("%f \n", ((double)minv/100));
 		}
 							
