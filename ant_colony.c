@@ -43,7 +43,7 @@ void main(){
 		double bound[n][2];
 		for(int i=0;i<n;i++){
 			printf("Enter the %d th variable lower and upper limit",i);
-			scanf("%f %f",&bound[i][0],&bound[i][1]);} 
+			scanf("%lf %lf",&bound[i][0],&bound[i][1]);} 
 		srand(time(0));//Randomizing srand time -> 0
 
 		printf("Enter Phermone evaporation rate range - 0.1-0.5");
