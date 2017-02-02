@@ -47,7 +47,7 @@ void main(){
 		srand(time(0));//Randomizing srand time -> 0
 
 		printf("Enter Phermone evaporation rate range - 0.1-0.5");
-		int phe;
+		float phe;
 		scanf("%f",&phe); //Phermone Evaporation rate
 
 		struct funcinfo minv;
