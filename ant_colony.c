@@ -42,7 +42,7 @@ void main(){
 		int n = scanf("%d",&n);
 		double bound[n][2];
 		for(int i=0;i<n;i++){
-			printf("Enter the %d th variable lower and upper limit");
+			printf("Enter the %d th variable lower and upper limit",i);
 			scanf("%f %f",&bound[i][0],&bound[i][1]);} 
 		srand(time(0));//Randomizing srand time -> 0
 
