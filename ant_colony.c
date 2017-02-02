@@ -40,7 +40,7 @@ struct funcinfo func(double *x){
 void main(){ 
 		printf("Enter the number of Variables");
 		int n = scanf("%d",&n);
-		int bound[n][2];
+		double bound[n][2];
 		for(int i=0;i<n;i++){
 			printf("Enter the %d th variable lower and upper limit");
 			scanf("%f %f",&bound[i][0],&bound[i][1]);} 
