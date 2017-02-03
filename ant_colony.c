@@ -65,7 +65,7 @@ void main(){
 				double tx[n_val]; //test variables
 				//Upper and lower bound Constraint Handling
 				for(int i=0;i<n_val;i++){
-					tx[i] = round((bound[i][0] + (double)rand() / (double)((double)RAND_MAX / (bound[i][1] - bound[i][0] + 1) + 1))*1000)/1000;//For each variable
+					tx[i] = round((bound[i][0] + (double)rand() / (double)((double)RAND_MAX / (bound[i][1] - bound[i][0] ) ))*100000)/100000;//For each variable
 					//printf("\n %f \n",tx[i]);
 					}
 
