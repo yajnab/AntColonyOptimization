@@ -17,7 +17,7 @@ struct funcinfo{
 				double *xv; //Equation variables
 				int validation; //1 if constraints are satisfied else a 0; A boolean but to support all C it is made integer type.
 };
-
+#ifdef problem
 struct funcinfo func(double *x){
  double val; double ctr[20];
   
@@ -39,7 +39,7 @@ struct funcinfo func(double *x){
  ret = (struct funcinfo){ ctr, val, x, validation };
  return  ret;//Array it
 }
-
+#endif
 void main(){ 
 		printf("Enter the number of Variables \t");
 		int n;
