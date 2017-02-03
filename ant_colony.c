@@ -65,7 +65,7 @@ void main(){
 				double tx[n]; //test variables
 				//Upper and lower bound Constraint Handling
 				for(int i=0;i<n;i++){
-					tx[i] = round((bound[i][0] + (double)rand() / (double)((double)RAND_MAX / (bound[i][1] - bound[i][0] + 1) + 1))*10)/10;//For each variable
+					tx[i] = round((bound[i][0] + (double)rand() / (double)((double)RAND_MAX / (bound[i][1] - bound[i][0] + 1) + 1))*1000)/1000;//For each variable
 					//printf("\n %f \n",tx[i]);
 					}
 
@@ -74,7 +74,7 @@ void main(){
 					if(funcval.validation==1){ // Checking the condition
 						double m1 = funcval.value; // Calculate the route length						
 						//printf("\n %lf", m1);
-						double m = round(m1*10)/10;
+						double m = round(m1*1000)/1000;
 						if(str==0){					
 							min.value=m;
 							if(gstr==0){minv.value=m;gstr++;}
