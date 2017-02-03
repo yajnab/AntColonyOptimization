@@ -5,7 +5,8 @@
 
 
 #define MAX_CONSTRAINT 20
-
+//#define PROBLEM		//Example
+#define SCM_PROBLEM  //My personal project
 /*
  * Author - Yajnavalkya Bandyopadhyay
  * email- 	yajnab@gmail.com
@@ -18,8 +19,12 @@ struct funcinfo{
 				double *xv; //Equation variables
 				int validation; //1 if constraints are satisfied else a 0; A boolean but to support all C it is made integer type.
 };
+#ifdef PROBLEM
 #include "problem.h"
-
+#endif
+#ifdef SCM_PROBLEM
+#include "../scmprob.h"
+#endif
 void main(){ 
 		printf("Enter the number of Variables \t");
 		int n_val;
