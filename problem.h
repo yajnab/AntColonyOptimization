@@ -6,20 +6,21 @@
  */
 
 #define problem
-
 #ifdef problem
 struct funcinfo func(double *x){
- double val; double ctr[20];
+ double val; double ctr[MAX_CONSTRAINT];
   
   /*The Function Goes Here*/
-  val= 2*x[0] + 4*x[1]/x[0]; //Function goes here
+  val= 2*x[0] + 4*x[1]/x[0] + x[0]*x[1]*x[2]; //Function goes here
 
 
 
- /* Normalized constraints g(x)=>0*/
+ /* Normalized constraints g(x)=>0 */
  ctr[0] = x[0]*x[1] - 1;
  ctr[1] = 2*x[0] + x[1];
-
+ ctr[2] = x[2]-85;
+ 
+/*Do not change anything here */
  int ctr_count = sizeof(ctr)/sizeof(ctr[0]);
  int validation=1;
  for(int i=0;i<ctr_count;i++){
