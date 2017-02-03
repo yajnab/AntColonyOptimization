@@ -82,8 +82,8 @@ void main(){
 			struct mins{
 			double value;
 			int ps;
-			double xval[n];} min;
-			
+			double *xval;} min;
+			min.xval = (void *) malloc(n*sizeof(int));
 			for(int counter = 0;counter <nor; counter++){//Generate Random Variable, i.e Indivisual Ant
 				double tx[n]; //test variables
 				//Upper and lower bound Constraint Handling
@@ -139,22 +139,21 @@ void main(){
 									
 									cnt++;
 								}
-								
 						}
-					}for(int i=0;i<n;i++){
-							printf("\n Variables %dth variable %f",i, r[min.ps].rx[i]);
-						}
-					
+					}
 					}
 					if(minv.value>min.value){
 						minv.xv = min.xval;
 						for(int i=0;i<n;i++){
-				printf("\n %dth variable %f",i, minv.xv[i]);
+				printf("\n %dth Minimum variable for interation %d is %f",i, gi, minv.xv[i]);
 				}
 						minv.value=min.value;
 				}
 			printf("\n Minimum Value %f", minv.value);
 		}printf("\n Smallest value%f", minv.value);
+		for(int i=0;i<n;i++){
+				printf("\n %dth Minimum variable %f",i, minv.xv[i]);
+				}
 }
 							
 		
