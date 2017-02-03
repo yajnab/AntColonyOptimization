@@ -36,10 +36,7 @@ struct funcinfo func(double *x){
 	 if(ctr[i]<0)validation =0;}
 		
  struct funcinfo ret;
- ret.cns = ctr;
- ret.value = val;
- ret.xv = x;
- ret.validation = validation;
+ ret = (struct funcinfo){ ctr, val, x, validation };
  return  ret;//Array it
 }
 
