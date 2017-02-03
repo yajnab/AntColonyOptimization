@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
+#define MAX_CONSTRAINT 20
 #define problem
 
 /*
@@ -18,7 +19,7 @@ struct funcinfo{
 };
 
 struct funcinfo func(double *x){
- double val; double *ctr;
+ double val; double ctr[20];
   
   /*The Function Goes Here*/
   val= 2*x[0] + 4*x[1]/x[0]; //Function goes here
