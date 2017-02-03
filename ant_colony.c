@@ -23,13 +23,13 @@ struct funcinfo func(double *x){
   
   /*The Function Goes Here*/
   val= 2*x[0] + 4*x[1]/x[0]; //Function goes here
-  printf("%lf",val);
- 
- 
+
+
+
  /* Normalized constraints g(x)=>0*/
  ctr[0] = x[0]*x[1] - 1;
  ctr[1] = 2*x[0] + x[1];
- 
+
  int ctr_count = sizeof(ctr)/sizeof(ctr[0]);
  int validation=1;
  for(int i=0;i<ctr_count;i++){
@@ -55,7 +55,7 @@ void main(){
 			} 
 		srand(time(0));//Randomizing srand time -> 0
 
-		printf("Enter Phermone evaporation rate range - 0.1-0.5 \t");
+		printf("\n Enter Phermone evaporation rate range - 0.1-0.5 \t");
 		float phe;
 		scanf("%f",&phe); //Phermone Evaporation rate
 
@@ -63,10 +63,10 @@ void main(){
 		int gstr=0;
 		
 		int maxiter;//Maximum number of iteration
-		printf("Enter the number of iteration \t");
+		printf("\n Enter the number of iteration \t");
 		scanf("%d",&maxiter);
 		int nor;//Number of routes
-		printf("Enter the number of routes \t");
+		printf("\n Enter the number of routes \t");
 		scanf("%d",&nor);
 		for(int gi=0;gi<maxiter;gi++){
 			int str=0;
@@ -81,20 +81,22 @@ void main(){
 			
 			struct mins{
 			double value;
-			int ps;} min;
+			int ps;
+			double xval[n];} min;
 			
 			for(int counter = 0;counter <nor; counter++){//Generate Random Variable, i.e Indivisual Ant
-				double *tx; //test variables
+				double tx[n]; //test variables
 				//Upper and lower bound Constraint Handling
 				for(int i=0;i<n;i++){
 					tx[i] = round((bound[i][0] + (double)rand() / (double)((double)RAND_MAX / (bound[i][1] - bound[i][0] + 1) + 1))*10)/10;//For each variable
-					printf("\n %f \n",tx[i]);}
+					//printf("\n %f \n",tx[i]);
+					}
 
 					struct funcinfo funcval = func(tx);
-					printf("%lf %d",funcval.value, funcval.validation);
+					//printf("\n %lf %d",funcval.value, funcval.validation);
 					if(funcval.validation==1){ // Checking the condition
 						double m1 = funcval.value; // Calculate the route length						
-						printf("%lf", m1);
+						//printf("\n %lf", m1);
 						double m = round(m1*10)/10;
 						if(str==0){					
 							min.value=m;
@@ -102,14 +104,14 @@ void main(){
 							min.ps= cnt;
 							r[cnt].value=m;
 							r[cnt].rx=tx;
+							for(int i=0;i<n;i++)
+								min.xval[i]=tx[i];
 							r[cnt].ph=1;
 							//printf("%f \t %f \n", r[min.ps].value, r[min.ps].ph);	
 							//printf("%f \t %d \n", min.value, min.ps);	
 							cnt++;str++;								
 							}
-					
-											//s[0]=m;s[1]=i;s[2]=j;s[3]=k;s[4]=l;str++;}//Initialize Phermone
-						else{
+							else{
 								int l1=0;
 								for(int lc=0;lc<cnt;lc++){
 									if(r[lc].value==m){l1++;break;}
@@ -118,49 +120,41 @@ void main(){
 									r[cnt].value=m;
 									r[cnt].ph=1.0;
 									r[cnt].rx=tx;
-					
-										/*printf("%f \t %d \t %d\n", r[cnt].value, r[cnt].ph, cnt); 
-										*printf("%f \t %d \n", r[min.ps].value, r[min.ps].ph);*/ //Debugging Line
-							
-							
+										//printf("%f \t %d \t %d\n", r[cnt].value, r[cnt].ph, cnt); 
+										//printf("%f \t %f \n", r[min.ps].value, r[min.ps].ph); //Debugging Line
+
 									if (r[min.ps].value<r[cnt].value){// If current route is larger than the minimum route
 										r[min.ps].ph=r[min.ps].ph*(1-phe)+1;
-									//printf("%f dingdong %d\n", min.value, r[min.ps].ph); //Debugging Line
+									//printf("%f dingdong %f\n", min.value, r[min.ps].ph); //Debugging Line
 									}
-									/*if (r[min.ps].value==r[cnt].value){// If current route is Equal than the minimum route though this is never going to happen due to exception handling already done above
-										r[min.ps].ph+=1;
-										//printf("%f dingdong2 %d\n", min.value, r[min.ps].ph); //Debugging Line
-									}*/
 									if (r[min.ps].value>r[cnt].value){// If current route is smaller than the minimum route
 										r[cnt].ph=r[min.ps].ph*(1-phe)+1;
 										r[min.ps].ph=1;
 										min.ps=cnt;
+										for(int i=0;i<n;i++)
+											min.xval[i]=r[min.ps].rx[i];										
 										min.value=r[cnt].value;
-										//printf("%f \n %d", min.value, r[min.ps].ph); //Debugging Line
+										//printf("%f \n %d %f", min.value, min.ps, r[min.ps].ph); //Debugging Line
 									}
+									
 									cnt++;
-						//s[0]=m;s[1]=i;s[2]=j;s[3]=k;s[4]=l;
-						//printf (" \n Found here %f %f %f %f %f\n", s[0],s[1],s[2], s[3], s[4]);}
 								}
+								
 						}
+					}for(int i=0;i<n;i++){
+							printf("\n Variables %dth variable %f",i, r[min.ps].rx[i]);
+						}
+					
 					}
-					}
-			if(minv.value>min.value){
-					minv.value=min.value;
-					minv.xv=r[min.ps].rx;					
+					if(minv.value>min.value){
+						minv.xv = min.xval;
+						for(int i=0;i<n;i++){
+				printf("\n %dth variable %f",i, minv.xv[i]);
 				}
-			printf("\n %f", min.value);
-			for(int i=0;i<n;i++){
-				printf("\n %f", r[min.ps].rx[i]);
+						minv.value=min.value;
 				}
-			printf("%f",r[min.ps].ph);
-			//printf("%f %f %f %f %f %f\n", min.value,r[min.ps].p,r[min.ps].q,r[min.ps].r,r[min.ps].s,  r[min.ps].ph);
-		}
-
-			printf("\n %f", minv.value);
-
-
-		//printf("%f \n", ((double)minv/100));
-		}
+			printf("\n Minimum Value %f", minv.value);
+		}printf("\n Smallest value%f", minv.value);
+}
 							
 		
