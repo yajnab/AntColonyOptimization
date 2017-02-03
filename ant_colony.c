@@ -70,7 +70,7 @@ void main(){
 					}
 
 					struct funcinfo funcval = func(tx);
-					printf("\n %lf %lf \t %d \n",funcval.value, tx[0], funcval.validation);
+					//printf("\n %lf %lf \t %d \n",funcval.value, tx[1], funcval.validation);
 					if(funcval.validation==1){ // Checking the condition
 						double m1 = funcval.value; // Calculate the route length						
 						//printf("\n %lf", m1);
